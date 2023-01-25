@@ -2,7 +2,7 @@
 
 $driver = 'mysql';
 $host = 'mysql';
-$db_name = 'spa-php';
+$db_name = 'spa';
 $db_user = 'root';
 $db_pass = '12345';
 $charset = 'utf8';

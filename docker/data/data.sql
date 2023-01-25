@@ -20,5 +20,5 @@ CREATE TABLE operation
 INSERT INTO operation (user_id, is_income, amount, comments)
 VALUES ('1', true, 400, 'Test1 Income'),
        ('1', true, 400.20, 'Test2 Income'),
-       ('1', true, 300, 'Test3 Expenses'),
-       ('1', true, 150.50, 'Test4 Expenses');
+       ('1', false, 300, 'Test3 Expenses'),
+       ('1', false, 150.50, 'Test4 Expenses');
