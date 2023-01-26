@@ -1,0 +1,41 @@
+/*
+    Header
+*/
+
+header {
+    background: #e2dbb1;
+    height: 70px;
+}
+header h1 {margin: 10px;}
+
+header ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+header ul li {float: right;}
+
+header ul li a {
+    display: block;
+    padding: 20px;
+    color: inherit;
+    text-decoration: none;
+}
+
+/*
+    Main
+*/
+
+h2 {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.form-inline .btn {
+    margin: 10px;
+}
+
+.table {
+    margin: 30px;
+}
