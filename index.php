@@ -3,7 +3,6 @@ include "function.php";
 include "path.php";
 $operations = selectAll('operation');
 $users = selectAll('users');
-//tt($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +17,9 @@ $users = selectAll('users');
 <div class="container">
     <div class="row content">
         <!-- Форма START -->
-        <h2>Форма создания записи</h2>
+        <h3>Форма создания записи</h3>
         <form action="" class="form-inline">
+            <div class="mb-3 col-md-6">
             <input type="hidden" name="url" value="">
             <input type="number" class="form-control" name="sum" placeholder="Сумма">
             <select class="form-control" name="status">
@@ -28,6 +28,7 @@ $users = selectAll('users');
             </select>
             <input type="text" class="form-control" placeholder="Комментарий" name="description">
             <button type="submit" class="btn btn-primary">Добавить</button>
+            </div>
         </form>
         <!-- Форма END -->
 
@@ -44,13 +45,15 @@ $users = selectAll('users');
             </tr>
             </thead>
             <tbody>
+            <?php foreach($operations as $operation):  ?>
             <tr>
-                <td>ID</td>
-                <td>Сумма</td>
-                <td>Тип</td>
-                <td>Комментарий</td>
+                <td><?= $operation['id']; ?></td>
+                <td><?= $operation['amount']; ?></td>
+                <td><?= $operation['status']; ?></td>
+                <td><?= $operation['description'] ?></td>
                 <td>Удалить</td>
             </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
         <!-- Таблица END -->
