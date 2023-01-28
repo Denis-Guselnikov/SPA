@@ -4,7 +4,7 @@ include "path.php";
 
 $errMsg = '';
 
-// Register
+// Регистрация
 if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['button-reg'])) {
     $login = $_POST['login'];
     $password1 = $_POST['password1'];
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['button-reg'])) {
     }
 }
 
-// Login
+// Авторизация
 if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['button-log'])) {
 
     $login = $_POST['login'];
@@ -38,8 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['button-log'])) {
         $errMsg= 'Не все поля заполнены!';
     } else {
         $existLogin = selectOne('users', ['username' => $login ]);
-//        tt($existLogin);
-//        exit();
         if ($existLogin and password_verify($password, $existLogin['password_hash'])) {
             $_SESSION['id'] = $existLogin['id'];
             $_SESSION['login'] = $existLogin['username'];
@@ -48,6 +46,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['button-log'])) {
             $errMsg = 'Ошибка авторизации!';
         }
     }
-
 }
 

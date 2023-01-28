@@ -61,7 +61,7 @@ function selectOne($table, $params = [])
 function selectAll($table, $params = [])
 {
     global $pdo;
-    $sql = "SELECT * FROM $table";
+    $sql = "SELECT * FROM $table ORDER BY id DESC LIMIT 10";
 
     if (!empty($params)) {
         $count = 0;
@@ -82,17 +82,25 @@ function selectAll($table, $params = [])
     return $query->fetchAll();
 }
 
+function getSumIncome()
+{
+    global $pdo;
+    $sql = "SELECT SUM(amount) FROM operation WHERE status='income'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    return $query->fetch();
+}
 
+function getSumExpense()
+{
+    global $pdo;
+    $sql = "SELECT SUM(amount) FROM operation WHERE status='expense'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    return $query->fetch();
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+function getResult($arr1, $arr2)
+{
+    return $arr1 - $arr2;
+}

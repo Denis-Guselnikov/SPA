@@ -1,8 +1,12 @@
 <?php
 include "function.php";
 include "path.php";
+include "controller/posts.php";
+
 $operations = selectAll('operation');
-$users = selectAll('users');
+$income = getSumIncome();
+$expense = getSumExpense();
+$result = array_map('getResult', $income, $expense);
 ?>
 
 <!DOCTYPE html>
@@ -16,18 +20,21 @@ $users = selectAll('users');
 
 <div class="container">
     <div class="row content">
+
         <!-- Форма START -->
         <h3>Форма создания записи</h3>
-        <form action="" class="form-inline">
+        <div class="mb-3 col-12 col-md-4 err">
+            <p><?= $errMsg ?></p>
+        </div>
+        <form action="" class="form-inline" method="post">
             <div class="mb-3 col-md-6">
-            <input type="hidden" name="url" value="">
-            <input type="number" class="form-control" name="sum" placeholder="Сумма">
-            <select class="form-control" name="status">
-                <option value="income">Приход</option>
-                <option value="expense">Расход</option>
-            </select>
-            <input type="text" class="form-control" placeholder="Комментарий" name="description">
-            <button type="submit" class="btn btn-primary">Добавить</button>
+                <input type="number" class="form-control" name="sum" placeholder="Сумма">
+                <select class="form-control" name="status">
+                    <option value="income">Приход</option>
+                    <option value="expense">Расход</option>
+                </select>
+                <input type="text" class="form-control" placeholder="Комментарий" name="description">
+                <button type="submit" class="btn btn-primary" name="add_post">Добавить</button>
             </div>
         </form>
         <!-- Форма END -->
@@ -41,27 +48,29 @@ $users = selectAll('users');
                 <th scope="col">Сумма</th>
                 <th scope="col">Тип</th>
                 <th scope="col">Комментарий</th>
-                <th scope="col">Удалить</th>
+                <th scope="col">Действие</th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach($operations as $operation):  ?>
-            <tr>
-                <td><?= $operation['id']; ?></td>
-                <td><?= $operation['amount']; ?></td>
-                <td><?= $operation['status']; ?></td>
-                <td><?= $operation['description'] ?></td>
-                <td>Удалить</td>
-            </tr>
+            <?php foreach ($operations as $operation): ?>
+                <tr>
+                    <td><?= $operation['id']; ?></td>
+                    <td><?= $operation['amount']; ?></td>
+                    <td><?= $operation['status']; ?></td>
+                    <td><?= $operation['description'] ?></td>
+                    <td>
+                        <a href="" class="btn btn-danger">Удалить</a>
+                    </td>
+                </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
         <!-- Таблица END -->
 
-        <div class="sum">
-            <h3>Итого:</h3>
-            <h5>Сумма Прихода:</h5>
-            <h5>Сумма Расхода:</h5>
+        <div>
+            <h3>Итого: <?=$result[0]; ?></h3>
+            <h5>Сумма Прихода: <?=$income['SUM(amount)']; ?></h5>
+            <h5>Сумма Расхода: <?=$expense['SUM(amount)']; ?></h5>
         </div>
     </div>
 </div>
