@@ -59,7 +59,7 @@ $result = array_map('getResult', $income, $expense);
                     <td><?= $operation['status']; ?></td>
                     <td><?= $operation['description'] ?></td>
                     <td>
-                        <a href="" class="btn btn-danger">Удалить</a>
+                        <a href="posts.php?delete_id=<?= $operation['id']; ?>" class="btn btn-danger">Удалить</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

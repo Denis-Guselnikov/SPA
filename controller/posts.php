@@ -22,3 +22,10 @@ if ($_SESSION['id'] and $_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['
         header('location: ' . BASE_URL);
     }
 }
+
+// Удаление записи
+if($_SERVER['REQUEST_METHOD'] === 'GET' and isset($_GET['delete_id'])){
+    $id = $_GET['delete_id'];
+    delete('operation', $id);
+    header('location: ' . BASE_URL);
+}

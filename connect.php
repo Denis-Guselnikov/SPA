@@ -3,8 +3,8 @@
 $driver = 'mysql';
 $host = 'mysql';
 $db_name = 'spa';
-$db_user = 'root';
-$db_pass = '12345';
+$db_user = 'spa';
+$db_pass = 'spa';
 $charset = 'utf8';
 $options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC];
