@@ -3,6 +3,10 @@ include "function.php";
 include "path.php";
 include "controller/posts.php";
 
+if(!$_SESSION['id']) {
+    header('location: ' . 'login.php');
+}
+
 $operations = selectAll('operation');
 $income = getSumIncome();
 $expense = getSumExpense();
