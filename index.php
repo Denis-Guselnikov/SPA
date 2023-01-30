@@ -57,13 +57,14 @@ $result = array_map('getResult', $income, $expense);
             </thead>
             <tbody>
             <?php foreach ($operations as $operation): ?>
-                <tr>
+                <tr id="<?= $operation['id']; ?>">
                     <td><?= $operation['id']; ?></td>
                     <td><?= $operation['amount']; ?></td>
                     <td><?= $operation['status']; ?></td>
                     <td><?= $operation['description'] ?></td>
                     <td>
-                        <a href="posts.php?delete_id=<?= $operation['id']; ?>" class="btn btn-danger">Удалить</a>
+                        <a href="controller/posts.php?delete_id=<?= $operation['id']; ?>" class="btn btn-danger">Удалить</a>
+                        <button type="submit" name="button" onclick="deletePost(<?= $operation['id']; ?>);">Удалить Ajax</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -78,6 +79,22 @@ $result = array_map('getResult', $income, $expense);
         </div>
     </div>
 </div>
+
+<script>
+    function deletePost(id) {
+        $(document).ready(function() {
+            $.ajax({
+                url: 'posts.php',
+                type: 'POST',
+                data: {id: id},
+                success:function () {
+                    alert("Удаление произошло!");
+                    document.getElementById(id).style.display = "none";
+                }
+            });
+        });
+    }
+</script>
 
 </body>
 </html>

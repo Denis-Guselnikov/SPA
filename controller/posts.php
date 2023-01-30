@@ -29,3 +29,10 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' and isset($_GET['delete_id'])){
     delete('operation', $id);
     header('location: ' . BASE_URL);
 }
+
+// Удаление записи Ajax
+if(isset($_POST["id"])) {
+    $id = $_POST["id"];
+    delete('operation', $id);
+    header('location: ' . BASE_URL);
+}
