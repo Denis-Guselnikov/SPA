@@ -25,23 +25,18 @@ $result = array_map('getResult', $income, $expense);
 <div class="container">
     <div class="row content">
 
-        <!-- Форма START -->
+        <!-- Форма Ajax START -->
         <h3>Форма создания записи</h3>
-        <div class="mb-3 col-12 col-md-4 err">
-            <p><?= $errMsg ?></p>
+        <div class="mb-3 col-md-6">
+            <input type="number" class="form-control" name="sum" id="summa" placeholder="Сумма">
+            <select class="form-control" name="status" id="status">
+                <option value="income">Приход</option>
+                <option value="expense">Расход</option>
+            </select>
+            <input type="text" id="description" class="form-control" placeholder="Комментарий" name="description">
+            <button type="submit" class="btn btn-primary" name="add_post" id="add">Добавить</button>
         </div>
-        <form action="" class="form-inline" method="post">
-            <div class="mb-3 col-md-6">
-                <input type="number" class="form-control" name="sum" placeholder="Сумма">
-                <select class="form-control" name="status">
-                    <option value="income">Приход</option>
-                    <option value="expense">Расход</option>
-                </select>
-                <input type="text" class="form-control" placeholder="Комментарий" name="description">
-                <button type="submit" class="btn btn-primary" name="add_post">Добавить</button>
-            </div>
-        </form>
-        <!-- Форма END -->
+        <!-- Форма Ajax END-->
 
         <!-- Таблица START -->
         <h2>Последние 10 записей</h2>
@@ -63,7 +58,6 @@ $result = array_map('getResult', $income, $expense);
                     <td><?= $operation['status']; ?></td>
                     <td><?= $operation['description'] ?></td>
                     <td>
-                        <a href="controller/posts.php?delete_id=<?= $operation['id']; ?>" class="btn btn-danger">Удалить</a>
                         <button type="submit" name="button" onclick="deletePost(<?= $operation['id']; ?>);">Удалить Ajax</button>
                     </td>
                 </tr>
@@ -85,7 +79,7 @@ $result = array_map('getResult', $income, $expense);
         $(document).ready(function() {
             $.ajax({
                 url: 'posts.php',
-                type: 'POST',
+                type: 'GET',
                 data: {id: id},
                 success:function () {
                     alert("Удаление произошло!");
@@ -94,6 +88,24 @@ $result = array_map('getResult', $income, $expense);
             });
         });
     }
+
+    $(document).ready(function () {
+        $("#add").on('click', function () {
+
+            let amount = document.getElementById("summa").value;
+            let status = document.getElementById("status").value;
+            let description = document.getElementById("description").value;
+
+            $.ajax({
+                method: "POST",
+                url: "posts.php",
+                data: {status: status, amount: amount, description: description}
+            })
+                .done(function () {
+                    console.log(amount, status, description);
+                });
+        });
+    })
 </script>
 
 </body>

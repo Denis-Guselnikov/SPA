@@ -2,13 +2,13 @@
 
 $errMsg = '';
 
-// Создание записи
-if ($_SESSION['id'] and $_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['add_post'])) {
-    $sum = $_POST['sum'];
+// Создание записи с Ajax
+if ($_SESSION['id'] and $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $sum = $_POST['amount'];
     $status = $_POST['status'];
     $description = $_POST['description'];
 
-    if ($sum === '' or $status === '' or $description === '') {
+    if ($sum === "" or $status === '' or $description === '') {
         $errMsg = 'Не все поля заполнены!!!';
     } else {
         $post = [
@@ -18,21 +18,13 @@ if ($_SESSION['id'] and $_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['
             'description' => $description
         ];
 
-        $add_post = insert('operation', $post);
-        header('location: ' . BASE_URL);
+        insert('operation', $post);
     }
 }
 
-// Удаление записи
-if($_SERVER['REQUEST_METHOD'] === 'GET' and isset($_GET['delete_id'])){
-    $id = $_GET['delete_id'];
-    delete('operation', $id);
-    header('location: ' . BASE_URL);
-}
-
 // Удаление записи Ajax
-if(isset($_POST["id"])) {
-    $id = $_POST["id"];
+if(isset($_GET["id"])) {
+    $id = $_GET["id"];
     delete('operation', $id);
     header('location: ' . BASE_URL);
 }
