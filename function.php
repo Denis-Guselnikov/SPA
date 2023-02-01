@@ -42,7 +42,7 @@ function insert($table, $params)
     $query = $pdo->prepare($sql);
     $query->execute();
     dbCheckError($query);
-    return $pdo->lastInsertId();
+    return ['id' => $pdo->lastInsertId(), 'params' => $params];
 }
 
 // Данные 1 строки из таблицы

@@ -15,7 +15,7 @@ include "controller/users.php";
     <!-- Форма START -->
     <form class="row justify-content-md-center" method="post" action="login.php">
         <h2>Авторизация</h2>
-        <div class="mb-3 col-12 col-md-4 err">
+        <div class="mb-3 col-12 col-md-4">
             <p><?= $errMsg ?></p>
         </div>
         <div class="w-100"></div>

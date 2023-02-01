@@ -82,7 +82,6 @@ $result = array_map('getResult', $income, $expense);
                 type: 'GET',
                 data: {id: id},
                 success:function () {
-                    alert("Удаление произошло!");
                     document.getElementById(id).style.display = "none";
                 }
             });
@@ -99,13 +98,31 @@ $result = array_map('getResult', $income, $expense);
             $.ajax({
                 method: "POST",
                 url: "posts.php",
-                data: {status: status, amount: amount, description: description}
-            })
-                .done(function () {
-                    console.log(amount, status, description);
-                });
+                dataType: 'text',
+                data: {status: status, amount: amount, description: description},
+                success: function(data) {
+
+                    if(data == 1) {
+                        alert('Заполните все поля!');
+                    }
+                    let result = $.parseJSON(data);
+                    console.log(result);
+
+                    const tableRow = '<tr id="'+ result.id +'">'
+                        +'<td>'+ result.id +'</td>'
+                        +'<td>'+ result.params.amount+ '.00' +'</td>'
+                        +'<td>'+ result.params.status +'</td>'
+                        +'<td>'+ result.params.description +'</td>'
+                        +'<td><button type="submit">Удалить Ajax</button></td>'
+                        +'</tr>'
+                    $('.table tbody').prepend(tableRow);
+
+                    $('#summa').val('');
+                    $('#description').val('');
+                },
+            });
         });
-    })
+    });
 </script>
 
 </body>
