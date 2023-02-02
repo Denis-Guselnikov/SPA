@@ -66,11 +66,15 @@ $result = array_map('getResult', $income, $expense);
         </table>
         <!-- Таблица END -->
 
-        <div>
+        <!-- Данные -->
+        <div id="total">
             <h3>Итого: <?=$result[0]; ?></h3>
             <h5>Сумма Прихода: <?=$income['SUM(amount)']; ?></h5>
             <h5>Сумма Расхода: <?=$expense['SUM(amount)']; ?></h5>
         </div>
+
+        <!-- Данные после обнавления -->
+        <div id="total2"></div>
     </div>
 </div>
 
@@ -81,8 +85,21 @@ $result = array_map('getResult', $income, $expense);
                 url: 'posts.php',
                 type: 'GET',
                 data: {id: id},
-                success:function () {
+                success:function (data) {
                     document.getElementById(id).style.display = "none";
+
+                    let result = JSON.parse(data);
+
+                    // Выводим данные сумм в #total2
+                    const totalSum = '<div>'
+                        +'<h3>'+ 'Итого: ' + result[2][0] +'</h3>'
+                        +'<h5>'+ 'Сумма Прихода: ' + result[0]["SUM(amount)"]  +'</h5>'
+                        +'<h5>'+ 'Сумма Расхода: ' + result[1]["SUM(amount)"]  +'</h5>'
+                        +'</div>'
+                    $('#total2').html(totalSum);
+
+                    // Скрыть текущие данные #total
+                    document.getElementById("total").style.display = "none";
                 }
             });
         });
@@ -101,22 +118,33 @@ $result = array_map('getResult', $income, $expense);
                 dataType: 'text',
                 data: {status: status, amount: amount, description: description},
                 success: function(data) {
-
                     if(data == 1) {
                         alert('Заполните все поля!');
                     }
-                    let result = $.parseJSON(data);
-                    console.log(result);
+                    let result = JSON.parse(data);
 
-                    const tableRow = '<tr id="'+ result.id +'">'
-                        +'<td>'+ result.id +'</td>'
-                        +'<td>'+ result.params.amount+ '.00' +'</td>'
-                        +'<td>'+ result.params.status +'</td>'
-                        +'<td>'+ result.params.description +'</td>'
-                        +'<td><button type="submit">Удалить Ajax</button></td>'
+                    // Добавление новой строки с данными в таблицу
+                    const tableRow = '<tr id="'+ result[0]["id"] +'">'
+                        +'<td>'+ result[0]["id"] +'</td>'
+                        +'<td>'+ result[0]["params"]["amount"]+ '.00' +'</td>'
+                        +'<td>'+ result[0]["params"]["status"] +'</td>'
+                        +'<td>'+ result[0]["params"]["description"] +'</td>'
+                        +'<td><button type="submit" onclick="deletePost('+ result[0]["id"] +')">Удалить Ajax</button></td>'
                         +'</tr>'
                     $('.table tbody').prepend(tableRow);
 
+                    // Выводим данные сумм в #total2
+                    const totalSum = '<div>'
+                    +'<h3>'+ 'Итого: ' + result[3][0] +'</h3>'
+                    +'<h5>'+ 'Сумма Прихода: ' + result[1]["SUM(amount)"]  +'</h5>'
+                    +'<h5>'+ 'Сумма Расхода: ' + result[2]["SUM(amount)"]  +'</h5>'
+                    +'</div>'
+                    $('#total2').html(totalSum);
+
+                    // Скрыть текущие данные #total
+                    document.getElementById("total").style.display = "none";
+
+                    // Обнуление Суммы и Комментарий
                     $('#summa').val('');
                     $('#description').val('');
                 },
