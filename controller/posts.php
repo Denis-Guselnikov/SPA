@@ -1,12 +1,15 @@
 <?php
 
 // Создание записи с Ajax
-if ($_SESSION['id'] and $_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SESSION['id'] && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $sum = trim($_POST['amount']);
     $status = trim($_POST['status']);
-    $description = htmlspecialchars(trim($_POST['description']));
+    $description = htmlspecialchars(trim($_POST['description']), ENT_QUOTES);
     if ($sum === "" or $status === '' or $description === '') {
         echo 1;
+        exit();
+    } elseif ($_POST['status'] != 'income' && $_POST['status'] != 'expense') {
+        echo 2;
         exit();
     } else {
         $post = [
@@ -23,16 +26,4 @@ if ($_SESSION['id'] and $_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($array);
         die();
     }
-}
-
-// Удаление записи с Ajax
-if(isset($_GET["id"])) {
-    $id = $_GET["id"];
-    delete('operation', $id);
-    $income = getSumIncome();
-    $expense = getSumExpense();
-    $result = array_map('getResult', $income, $expense);
-    $array = [$income, $expense, $result];
-    echo json_encode($array);
-    die();
 }

@@ -22,7 +22,7 @@ function dbCheckError($query)
 }
 
 // Запись в таблицу
-function insert($table, $params)
+function insert($table, $params): array
 {
     global $pdo;
     $i = 0;

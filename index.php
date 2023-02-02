@@ -82,14 +82,13 @@ $result = array_map('getResult', $income, $expense);
     function deletePost(id) {
         $(document).ready(function() {
             $.ajax({
-                url: 'posts.php',
+                url: 'delete.php',
                 type: 'GET',
                 data: {id: id},
                 success:function (data) {
                     document.getElementById(id).style.display = "none";
 
                     let result = JSON.parse(data);
-
                     // Выводим данные сумм в #total2
                     const totalSum = '<div>'
                         +'<h3>'+ 'Итого: ' + result[2][0] +'</h3>'
@@ -120,7 +119,10 @@ $result = array_map('getResult', $income, $expense);
                 success: function(data) {
                     if(data == 1) {
                         alert('Заполните все поля!');
+                    } else if(data == 2) {
+                        alert('Не верно выбраны данные!');
                     }
+
                     let result = JSON.parse(data);
 
                     // Добавление новой строки с данными в таблицу
